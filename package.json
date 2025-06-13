@@ -1,0 +1,14 @@
+{
+  "name": "mangas-faker",
+  "version": "1.0.0",
+  "description": "Proyecto para insertar mangas con Faker en MySQL",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.3.0",
+    "dotenv": "^16.3.1",
+    "mysql2": "^3.9.4"
+  }
+}
