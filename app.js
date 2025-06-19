@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./swagger');
@@ -6,7 +7,7 @@ const authRoutes = require('./routes/auth');
 const User = require('./models/User');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Middleware para parsear JSON
 app.use(express.json());
@@ -22,7 +23,20 @@ app.use('/api/mangas', mangasRoutes);
 
 // Ruta de inicio
 app.get('/', (req, res) => {
-  res.send('Bienvenido a la API de Mangas. Visita /api-docs para ver la documentación.');
+  res.json({
+    message: 'Bienvenido a la API de Mangas',
+    version: '1.0.0',
+    documentation: '/api-docs',
+    endpoints: {
+      auth: '/api/auth',
+      mangas: '/api/mangas'
+    }
+  });
+});
+
+// Ruta de health check para Railway
+app.get('/health', (req, res) => {
+  res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
 // Crear tabla de usuarios al iniciar la aplicación
@@ -37,6 +51,7 @@ async function initializeDatabase() {
 
 app.listen(port, async () => {
   await initializeDatabase();
-  console.log(`🚀 Servidor corriendo en http://localhost:${port}`);
-  console.log(`📚 Documentación disponible en http://localhost:${port}/api-docs`);
+  console.log(`🚀 Servidor corriendo en puerto ${port}`);
+  console.log(`📚 Documentación disponible en /api-docs`);
+  console.log(`🌍 Entorno: ${process.env.NODE_ENV || 'development'}`);
 }); 

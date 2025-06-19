@@ -6,12 +6,14 @@ const options = {
     info: {
       title: 'API de Mangas',
       version: '1.0.0',
-      description: 'API para gestionar una colección de mangas',
+      description: 'API para gestionar una colección de mangas con autenticación JWT',
     },
     servers: [
       {
-        url: 'http://localhost:3000',
-        description: 'Servidor de desarrollo',
+        url: process.env.NODE_ENV === 'production' 
+          ? 'https://your-app-name.railway.app' 
+          : 'http://localhost:3000',
+        description: process.env.NODE_ENV === 'production' ? 'Servidor de producción' : 'Servidor de desarrollo',
       },
     ],
   },

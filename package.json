@@ -1,16 +1,21 @@
 {
   "name": "mangas-faker",
   "version": "1.0.0",
-  "description": "Proyecto para insertar mangas con Faker en MySQL",
-  "main": "index.js",
+  "description": "API de Mangas con JWT y Swagger",
+  "main": "app.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "node test-api.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "dependencies": {
     "@faker-js/faker": "^8.3.0",
     "axios": "^1.10.0",
     "bcryptjs": "^3.0.2",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.1",

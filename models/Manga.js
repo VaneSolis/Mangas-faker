@@ -1,11 +1,11 @@
 const mysql = require('mysql2/promise');
 
 const pool = mysql.createPool({
-  host: 'sql5.freesqldatabase.com',
-  user: 'sql5784546',
-  password: 'NEBq6v4FKw',
-  database: 'sql5784546',
-  port: 3306,
+  host: process.env.DB_HOST || 'sql5.freesqldatabase.com',
+  user: process.env.DB_USER || 'sql5784546',
+  password: process.env.DB_PASSWORD || 'NEBq6v4FKw',
+  database: process.env.DB_NAME || 'sql5784546',
+  port: process.env.DB_PORT || 3306,
 });
 
 class Manga {
