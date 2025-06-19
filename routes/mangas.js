@@ -1,6 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const MangaController = require('../controllers/mangaController');
+const { auth, adminAuth } = require('../middleware/auth');
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
 
 /**
  * @swagger
@@ -83,7 +94,9 @@ router.get('/total', MangaController.getTotalMangas);
  * @swagger
  * /api/mangas:
  *   post:
- *     summary: Crea un nuevo manga
+ *     summary: Crea un nuevo manga (requiere autenticación)
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -103,14 +116,18 @@ router.get('/total', MangaController.getTotalMangas);
  *     responses:
  *       201:
  *         description: Manga creado exitosamente
+ *       401:
+ *         description: No autorizado
  */
-router.post('/', MangaController.createManga);
+router.post('/', auth, MangaController.createManga);
 
 /**
  * @swagger
  * /api/mangas/{id}:
  *   put:
- *     summary: Actualiza un manga existente
+ *     summary: Actualiza un manga existente (requiere autenticación)
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -136,16 +153,20 @@ router.post('/', MangaController.createManga);
  *     responses:
  *       200:
  *         description: Manga actualizado exitosamente
+ *       401:
+ *         description: No autorizado
  *       404:
  *         description: Manga no encontrado
  */
-router.put('/:id', MangaController.updateManga);
+router.put('/:id', auth, MangaController.updateManga);
 
 /**
  * @swagger
  * /api/mangas/{id}:
  *   delete:
- *     summary: Elimina un manga
+ *     summary: Elimina un manga (requiere permisos de administrador)
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -155,9 +176,13 @@ router.put('/:id', MangaController.updateManga);
  *     responses:
  *       200:
  *         description: Manga eliminado exitosamente
+ *       401:
+ *         description: No autorizado
+ *       403:
+ *         description: Acceso denegado
  *       404:
  *         description: Manga no encontrado
  */
-router.delete('/:id', MangaController.deleteManga);
+router.delete('/:id', adminAuth, MangaController.deleteManga);
 
 module.exports = router; 
