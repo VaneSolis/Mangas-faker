@@ -17,7 +17,9 @@ const { auth, adminAuth } = require('../middleware/auth');
  * @swagger
  * /api/mangas:
  *   get:
- *     summary: Obtiene una lista paginada de mangas
+ *     summary: Obtiene una lista paginada de mangas (requiere autenticación)
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: query
  *         name: pagina
@@ -32,14 +34,18 @@ const { auth, adminAuth } = require('../middleware/auth');
  *     responses:
  *       200:
  *         description: Lista de mangas
+ *       401:
+ *         description: No autorizado
  */
-router.get('/', MangaController.getMangas);
+router.get('/', auth, MangaController.getMangas);
 
 /**
  * @swagger
  * /api/mangas/{id}:
  *   get:
- *     summary: Obtiene un manga por su ID
+ *     summary: Obtiene un manga por su ID (requiere autenticación)
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -49,16 +55,20 @@ router.get('/', MangaController.getMangas);
  *     responses:
  *       200:
  *         description: Manga encontrado
+ *       401:
+ *         description: No autorizado
  *       404:
  *         description: Manga no encontrado
  */
-router.get('/:id', MangaController.getMangaById);
+router.get('/:id', auth, MangaController.getMangaById);
 
 /**
  * @swagger
  * /api/mangas/genero/{generoId}:
  *   get:
- *     summary: Obtiene mangas por género
+ *     summary: Obtiene mangas por género (requiere autenticación)
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: generoId
@@ -76,19 +86,25 @@ router.get('/:id', MangaController.getMangaById);
  *     responses:
  *       200:
  *         description: Lista de mangas del género
+ *       401:
+ *         description: No autorizado
  */
-router.get('/genero/:generoId', MangaController.getMangasByGenero);
+router.get('/genero/:generoId', auth, MangaController.getMangasByGenero);
 
 /**
  * @swagger
  * /api/mangas/total:
  *   get:
- *     summary: Obtiene el total de mangas
+ *     summary: Obtiene el total de mangas (requiere autenticación)
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Total de mangas
+ *       401:
+ *         description: No autorizado
  */
-router.get('/total', MangaController.getTotalMangas);
+router.get('/total', auth, MangaController.getTotalMangas);
 
 /**
  * @swagger
