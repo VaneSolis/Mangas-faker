@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./swagger');
 const mangasRoutes = require('./routes/mangas');
@@ -8,6 +9,22 @@ const User = require('./models/User');
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Configuración de CORS
+const corsOptions = {
+  origin: [
+    'https://mangas-faker-production.up.railway.app',
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'https://swagger.io',
+    'https://editor.swagger.io'
+  ],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+// Middleware para CORS
+app.use(cors(corsOptions));
 
 // Middleware para parsear JSON
 app.use(express.json());
