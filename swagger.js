@@ -11,7 +11,7 @@ const options = {
     servers: [
       {
         url: process.env.NODE_ENV === 'production' 
-          ? 'https://your-app-name.railway.app' 
+          ? 'https://mangas-faker-production.up.railway.app' 
           : 'http://localhost:3000',
         description: process.env.NODE_ENV === 'production' ? 'Servidor de producción' : 'Servidor de desarrollo',
       },
